@@ -101,19 +101,23 @@ module e203_ifu_litebpu(
    */
   integer i;
   reg [1:0] tables[1023:0];
-  always @(posedge rst_n)
+  
+  always @(posedge clk, negedge rst_n)
     begin
-      for (i = 0; i < 1024; i = i + 1)
-        tables[i] = 2'b01;
-    end
-  always @(posedge clk)
-    if (bjp_op)
-      begin
-        if (bjp_rslv && tables[alu_cmt_pc[9:0]] != 2'b11)
-          tables[alu_cmt_pc[9:0]] = tables[alu_cmt_pc[9:0]] + 2'b01;
-        else if (!bjp_rslv && tables[alu_cmt_pc[9:0]] != 2'b00)
-          tables[alu_cmt_pc[9:0]] = tables[alu_cmt_pc[9:0]] - 2'b01;
+      if (rst_n == 1'b0)
+          begin
+            for (i = 0; i < 1024; i = i + 1)
+              tables[i] = 2'b01;
+          end
+    
+      if (bjp_op)
+        begin
+          if (bjp_rslv && tables[alu_cmt_pc[9:0]] != 2'b11)
+            tables[alu_cmt_pc[9:0]] = tables[alu_cmt_pc[9:0]] + 2'b01;
+          else if (!bjp_rslv && tables[alu_cmt_pc[9:0]] != 2'b00)
+            tables[alu_cmt_pc[9:0]] = tables[alu_cmt_pc[9:0]] - 2'b01;
       end
+    end
   
   // The JAL and JALR is always jump, bxxx backward is predicted as taken  
   // assign prdt_taken   = (dec_jal | dec_jalr | (dec_bxx & dec_bjp_imm[`E203_XLEN-1]));
