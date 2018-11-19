@@ -301,6 +301,11 @@ module e203_core(
   wire bjp_op;
   wire bjp_rslv;
 
+  // wire rf_wbck_ena;
+  // wire [`E203_XLEN-1:0] rf_wbck_wdat;
+  // wire [`E203_RFIDX_WIDTH-1:0] rf_wbck_rdidx;
+
+
     `ifdef E203_HAS_MEM_ITF //{
   wire                         ifu2biu_icb_cmd_valid;
   wire                         ifu2biu_icb_cmd_ready;
@@ -357,7 +362,11 @@ module e203_core(
     .alu_cmt_pc(alu_cmt_pc),
     .bjp_rslv(bjp_rslv),
     .bjp_op(bjp_op),
-
+    
+    
+    // .rf_wbck_wdat(rf_wbck_wdat),
+    // .rf_wbck_rdidx(rf_wbck_rdidx),
+    // .rf_wbck_ena(rf_wbck_ena),
 
 
     // .global_table(tables),
@@ -474,7 +483,10 @@ module e203_core(
     .alu_cmt_pc(alu_cmt_pc),
     .bjp_rslv(bjp_rslv),
     .bjp_op(bjp_op),
-
+    
+    // .rf_wbck_ena(rf_wbck_ena),
+    // .rf_wbck_rdidx(rf_wbck_rdidx),
+    // .rf_wbck_wdat(rf_wbck_wdat),
 
 
 

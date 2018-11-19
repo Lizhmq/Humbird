@@ -120,10 +120,10 @@ module e203_exu_disp(
   input  rst_n
   );
 
-  wire   [`E203_XLEN-1:0] disp_i_rs1_;
-  wire   [`E203_XLEN-1:0] disp_i_rs2_;
-  assign disp_i_rs1_ = (forward_ena & (disp_i_rs1idx == forward_idx)) ? forward_dat : disp_i_rs1;
-  assign disp_i_rs2_ = (forward_ena & (disp_i_rs2idx == forward_idx)) ? forward_dat : disp_i_rs2;
+  // wire   [`E203_XLEN-1:0] disp_i_rs1_;
+  // wire   [`E203_XLEN-1:0] disp_i_rs2_;
+  // assign disp_i_rs1_ = (forward_ena & (disp_i_rs1idx == forward_idx)) ? forward_dat : disp_i_rs1;
+  // assign disp_i_rs2_ = (forward_ena & (disp_i_rs2idx == forward_idx)) ? forward_dat : disp_i_rs2;
 
 
   wire [`E203_DECINFO_GRP_WIDTH-1:0] disp_i_info_grp  = disp_i_info [`E203_DECINFO_GRP];
@@ -243,10 +243,10 @@ module e203_exu_disp(
   assign disp_i_ready     = disp_condition & disp_i_ready_pos; 
 
 
-  // wire [`E203_XLEN-1:0] disp_i_rs1_msked = disp_i_rs1 & {`E203_XLEN{~disp_i_rs1x0}};
-  // wire [`E203_XLEN-1:0] disp_i_rs2_msked = disp_i_rs2 & {`E203_XLEN{~disp_i_rs2x0}};
-  wire [`E203_XLEN-1:0] disp_i_rs1_msked = disp_i_rs1_ & {`E203_XLEN{~disp_i_rs1x0}};
-  wire [`E203_XLEN-1:0] disp_i_rs2_msked = disp_i_rs2_ & {`E203_XLEN{~disp_i_rs2x0}};
+  wire [`E203_XLEN-1:0] disp_i_rs1_msked = disp_i_rs1 & {`E203_XLEN{~disp_i_rs1x0}};
+  wire [`E203_XLEN-1:0] disp_i_rs2_msked = disp_i_rs2 & {`E203_XLEN{~disp_i_rs2x0}};
+  // wire [`E203_XLEN-1:0] disp_i_rs1_msked = disp_i_rs1_ & {`E203_XLEN{~disp_i_rs1x0}};
+  // wire [`E203_XLEN-1:0] disp_i_rs2_msked = disp_i_rs2_ & {`E203_XLEN{~disp_i_rs2x0}};
 
     // Since we always dispatch any instructions into ALU, so we dont need to gate ops here
   //assign disp_o_alu_rs1   = {`E203_XLEN{disp_alu}} & disp_i_rs1_msked;

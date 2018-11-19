@@ -38,6 +38,9 @@ module e203_ifu(
   input bjp_rslv,
   input bjp_op,
 
+  // input rf_wbck_ena;
+  // input [`E203_XLEN-1:0] rf_wbck_wdat;
+  // input [`E203_RFIDX_WIDTH-1:0] rf_wbck_rdidx;
 
 
   output[`E203_PC_SIZE-1:0] inspect_pc,

@@ -101,13 +101,13 @@ module e203_ifu_litebpu(
    */
   integer i;
   reg [1:0] tables[1023:0];
-  always @(posedge clk, posedge rst_n)
-    if (rst_n == 1'b1)
-      begin
-        for (i = 0; i < 1024; i = i + 1)
-          tables[i] = 2'b01;
-      end
-    else if (bjp_op)
+  always @(posedge rst_n)
+    begin
+      for (i = 0; i < 1024; i = i + 1)
+        tables[i] = 2'b01;
+    end
+  always @(posedge clk)
+    if (bjp_op)
       begin
         if (bjp_rslv && tables[alu_cmt_pc[9:0]] != 2'b11)
           tables[alu_cmt_pc[9:0]] = tables[alu_cmt_pc[9:0]] + 2'b01;

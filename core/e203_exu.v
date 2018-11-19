@@ -37,8 +37,11 @@ module e203_exu(
   output [`E203_PC_SIZE-1:0]alu_cmt_pc,
   output bjp_rslv,
   output bjp_op,
-
-
+  
+  // output rf_wbck_ena;
+  // output [`E203_XLEN-1:0] rf_wbck_wdat;
+  // output [`E203_RFIDX_WIDTH-1:0] rf_wbck_rdidx;
+  
 
   output commit_mret,
   output commit_trap,
@@ -199,6 +202,10 @@ module e203_exu(
   // Instantiate the Regfile
   wire [`E203_XLEN-1:0] rf_rs1;
   wire [`E203_XLEN-1:0] rf_rs2;
+  
+  wire [`E203_XLEN-1:0] rf_rs1_ = (rf_wbck_ena & (rf_wbck_rdidx == i_rs1idx)) ? rf_wbck_wdat : rf_rs1;
+  wire [`E203_XLEN-1:0] rf_rs2_ = (rf_wbck_ena & (rf_wbck_rdidx == i_rs2idx)) ? rf_wbck_wdat : rf_rs2;
+
 
   wire rf_wbck_ena;
   wire [`E203_XLEN-1:0] rf_wbck_wdat;
@@ -357,8 +364,8 @@ module e203_exu(
     .disp_i_rdwen        (dec_rdwen       ),
     .disp_i_rdidx        (dec_rdidx       ),
     .disp_i_info         (dec_info        ),
-    .disp_i_rs1          (rf_rs1          ),
-    .disp_i_rs2          (rf_rs2          ),
+    .disp_i_rs1          (rf_rs1_          ),
+    .disp_i_rs2          (rf_rs2_          ),
     .disp_i_imm          (dec_imm        ),
     .disp_i_pc           (dec_pc         ),
     .disp_i_misalgn      (dec_misalgn    ),
@@ -854,7 +861,7 @@ module e203_exu(
   assign dec2ifu_rden  = disp_oitf_rdwen & (~disp_oitf_rdfpu); 
   assign dec2ifu_rs1en = disp_oitf_rs1en & (~disp_oitf_rs1fpu);
   assign dec2ifu_rdidx = dec_rdidx;
-  assign rf2ifu_rs1    = rf_rs1;
+  assign rf2ifu_rs1    = rf_rs1_;
 
 
 
