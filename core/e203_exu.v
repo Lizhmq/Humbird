@@ -202,10 +202,10 @@ module e203_exu(
   // Instantiate the Regfile
   wire [`E203_XLEN-1:0] rf_rs1;
   wire [`E203_XLEN-1:0] rf_rs2;
-  
+
   wire [`E203_XLEN-1:0] rf_rs1_ = (rf_wbck_ena & (rf_wbck_rdidx == i_rs1idx)) ? rf_wbck_wdat : rf_rs1;
   wire [`E203_XLEN-1:0] rf_rs2_ = (rf_wbck_ena & (rf_wbck_rdidx == i_rs2idx)) ? rf_wbck_wdat : rf_rs2;
-
+  wire [`E203_XLEN-1:0] rf2ifu_x1 = (rf_wbck_ena & (rf_wbck_rdidx == 1)) ? rf_wbck_wdat : rf2ifu_x1_;
 
   wire rf_wbck_ena;
   wire [`E203_XLEN-1:0] rf_wbck_wdat;
@@ -218,7 +218,7 @@ module e203_exu(
     .read_src1_dat (rf_rs1),
     .read_src2_dat (rf_rs2),
     
-    .x1_r          (rf2ifu_x1),
+    .x1_r          (rf2ifu_x1_),
                     
     .wbck_dest_wen (rf_wbck_ena),
     .wbck_dest_idx (rf_wbck_rdidx),
